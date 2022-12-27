@@ -1,11 +1,10 @@
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class PublicAirport extends Airport {
     private final double subsidy;
 
-    public PublicAirport(int idAirport, String nameAirport, String cityLocated, String countryLocated, List<Company> companies, Double subsidy) {
-        super(idAirport, nameAirport, cityLocated, countryLocated, companies);
+    public PublicAirport(int idAirport, String nameAirport, String cityLocated, String countryLocated, Double subsidy) {
+        super(idAirport, nameAirport, cityLocated, countryLocated);
         this.subsidy = subsidy;
     }
 
@@ -24,9 +23,19 @@ public class PublicAirport extends Airport {
     }
 
     @Override
+    public boolean addCompany(Company company) {
+        return this.getCompanies().add(company);
+    }
+
+    @Override
     public String companiesByAirportName() {
         return "Nombre= " + this.getNameAirport()
                 + "\n Companias:\n" + "Este aeropuerto pertenece al gobierno";
+    }
+
+    @Override
+    public boolean isPrivate() {
+        return false;
     }
 
     @Override

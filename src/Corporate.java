@@ -1,10 +1,10 @@
-public class Corporates {
+public class Corporate {
     private final int idCorporate;
     private final String name;
     private final double cost;
     private final String address;
 
-    public Corporates(int idCorporate, String name, double cost, String address) {
+    public Corporate(int idCorporate, String name, double cost, String address) {
 
         this.idCorporate = idCorporate;
         this.name = name;

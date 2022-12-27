@@ -11,24 +11,24 @@ public class AirportManager {
     }
 
     public void addAirport(Airport airport) {
-         this.airports.add(airport);
+        this.airports.add(airport);
     }
 
     public String consultAirport(String type) {
         boolean PublicAirport = List.of("Aeropuerto publico", "Publico", "aeropuerto publico", "publico").contains(type);
         var found = new ArrayList<Airport>();
-        for (var airport : airports ) {
+        for (var airport : airports) {
             if (PublicAirport) {
-                if(airport.getClass().getName().equals("PublicAirport")) {
+                if (airport.getClass().getName().equals("PublicAirport")) {
                     found.add(airport);
                 }
             } else {
-                if(airport.getClass().getName().equals("PrivateAirport")) {
+                if (airport.getClass().getName().equals("PrivateAirport")) {
                     found.add(airport);
                 }
             }
         }
-        return found.stream().map(Airport -> "Aeropuertos privados\n" + Airport.getNameAirport()).collect(Collectors.joining());
+        return found.stream().map(Airport::getNameAirport).collect(Collectors.joining());
     }
 
     public String listFlightsByCompanyName(String companyName) {
@@ -53,17 +53,13 @@ public class AirportManager {
     }
 
     public String showCorporates() {
-        var publicAirports = new ArrayList<Airport>();
-        var privateAirports = new ArrayList<Airport>();
+        var publicAirports = this.airports.stream().filter(Airport::isPrivate).map(Airport::showCorporates).collect(Collectors.joining());
+        var privateAirports = this.airports.stream().filter(airport -> !airport.isPrivate()).map(Airport::showCorporates).collect(Collectors.joining());
 
-        for (var corporates : airports ) {
-            if (corporates.getClass().getName().equals("PublicAirport")) {
-                publicAirports.add(corporates);
-            } else if (corporates.getClass().getName().equals("PrivateAirport")) {
-                privateAirports.add(corporates);
-            }
-        }
-        return  "Empresas privadas:\n" + privateAirports.stream().map(Airport::showCorporates).collect(Collectors.joining())
-                + "\nEmpresas publicas:\n" + publicAirports.stream().map(Airport::showCorporates).collect(Collectors.joining());
+        return privateAirports + publicAirports;
+    }
+
+    public Object[][] toData() {
+        return null;
     }
 }

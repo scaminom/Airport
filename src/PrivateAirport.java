@@ -1,16 +1,21 @@
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PrivateAirport extends Airport {
-    private final List<Corporates> corporates;
+    private final Set<Corporate> corporates;
 
-    public PrivateAirport(int idAirport, String nameAirport, String cityLocated, String countryLocated, List<Company> companies, List<Corporates> corporates) {
-        super(idAirport, nameAirport, cityLocated, countryLocated, companies);
-        this.corporates = corporates;
+    public PrivateAirport(int idAirport, String nameAirport, String cityLocated, String countryLocated) {
+        super(idAirport, nameAirport, cityLocated, countryLocated);
+        this.corporates = new HashSet<>();
     }
 
-    public List<Corporates> getCorporates() {
+    public Set<Corporate> getCorporates() {
         return this.corporates;
+    }
+
+    public boolean addCorporate(Corporate corporate) {
+        return this.corporates.add(corporate);
     }
 
     @Override
@@ -20,7 +25,12 @@ public class PrivateAirport extends Airport {
 
     @Override
     public String showCorporates() {
-        return this.corporates.stream().map(corporates -> corporates + "\n").collect(Collectors.joining());
+        return this.corporates.stream().map(corporate -> corporate + "\n").collect(Collectors.joining());
+    }
+
+    @Override
+    public boolean addCompany(Company company) {
+        return this.getCompanies().add(company);
     }
 
     @Override
@@ -30,10 +40,15 @@ public class PrivateAirport extends Airport {
     }
 
     @Override
+    public boolean isPrivate() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "IdAeropuerto= " + this.getIdAirport() + "| Nombre= " + this.getNameAirport() + "| Ciudad localizada= "
                 + this.getCityLocated() + "| Pais localizado= " + this.getCountryLocated()
                 + "| Companias:\n" + this.getCompanies().stream().map(Company::toString).collect(Collectors.joining()) + "Empresas:\n "
-                + this.getCorporates().stream().map(Corporates -> Corporates.toString()).collect(Collectors.joining());
+                + this.getCorporates().stream().map(Corporate -> Corporate.toString()).collect(Collectors.joining());
     }
 }
